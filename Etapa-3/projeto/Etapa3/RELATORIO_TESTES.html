@@ -1,0 +1,305 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Relatório de Testes — Etapa 3</title><style>
+  @page { size: A4; margin: 15mm 13mm 16mm; }
+  * { box-sizing: border-box; }
+  body { font: 10.5pt/1.45 "Segoe UI", Arial, sans-serif; color: #20242a; max-width: 1100px; margin: 30px auto; padding: 0 24px; }
+  h1 { color: #17365d; border-bottom: 3px solid #5b9bd5; padding-bottom: 8px; }
+  h2 { color: #1f4e79; border-bottom: 1px solid #bdd7ee; padding-bottom: 4px; margin-top: 28px; }
+  h3 { color: #2f5597; break-after: avoid; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 9pt; break-inside: auto; }
+  tr { break-inside: avoid; }
+  th { background: #d9eaf7; text-align: left; }
+  th, td { border: 1px solid #9fbad0; padding: 5px 7px; vertical-align: top; }
+  code { font-family: Consolas, monospace; background: #eef2f5; border-radius: 3px; padding: 1px 3px; }
+  pre { background: #20242a; color: #f4f4f4; padding: 12px; border-radius: 5px; overflow-wrap: anywhere; white-space: pre-wrap; }
+  img { display: block; max-width: 100%; max-height: 245mm; object-fit: contain; margin: 10px auto 24px; border: 1px solid #bbb; break-inside: avoid; }
+  blockquote { border-left: 4px solid #5b9bd5; padding-left: 12px; color: #555; }
+  @media print { body { margin: 0; padding: 0; max-width: none; } h2, h3 { break-after: avoid; } a { color: inherit; text-decoration: none; } }
+</style></head><body><h1>Relatório de testes manuais — Etapa 3</h1>
+<p><strong>Projeto:</strong> Locadora de Veículos<br><strong>Data da execução:</strong> 03/10/2026<br><strong>Ferramenta:</strong> Swagger UI / OpenAPI 3.0<br><strong>Resultado:</strong> 35 de 35 chamadas aprovadas</p>
+<h2>1. Objetivo</h2>
+<p>Validar pelo Swagger todas as operações CRUD das cinco entidades, os cinco filtros com joins e o tratamento padronizado de erros. Cada chamada registrou método HTTP, URL, dados enviados, código esperado, código recebido e corpo da resposta.</p>
+<h2>2. Ambiente</h2>
+<ul>
+<li>API ASP.NET Core 8;</li>
+<li>Entity Framework Core 8;</li>
+<li>Swagger/Swashbuckle 6.6.2;</li>
+<li>URL dos testes: <code>http://127.0.0.1:5190</code>;</li>
+<li>ambiente isolado <code>Testing</code>, com banco EF Core InMemory reiniciado antes da execução;</li>
+<li>configuração normal da aplicação preservada para SQL Server Express em <code>appsettings.json</code>.</li>
+</ul>
+<p>O provedor em memória foi usado somente para tornar a execução das evidências reproduzível, pois o serviço Windows <code>MSSQL$SQLEXPRESS</code> estava parado e exigia privilégio administrativo. Controllers, DTOs, validações, regras e rotas são exatamente os mesmos usados com o SQL Express.</p>
+<h2>3. Procedimento</h2>
+<ol>
+<li>Compilar a solução.</li>
+<li>Iniciar a API no ambiente <code>Testing</code>.</li>
+<li>Abrir <code>/swagger</code>.</li>
+<li>Criar fabricante, categoria, dois clientes, veículo e aluguel.</li>
+<li>Executar leituras, atualizações e os cinco filtros.</li>
+<li>testar respostas 400, 404 e 409.</li>
+<li>Excluir os registros em ordem inversa para respeitar relacionamentos.</li>
+<li>Conferir o corpo e o código de cada resposta.</li>
+</ol>
+<p>O arquivo <code>executar-testes.ps1</code> reproduz a sequência e <code>resultados-testes.json</code> conserva os retornos obtidos.</p>
+<h2>4. Resultado de cada chamada</h2>
+<table>
+<thead>
+<tr>
+<th align="right">#</th>
+<th>Método e chamada</th>
+<th>Retorno obtido</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">1</td>
+<td><code>POST /api/fabricantes</code></td>
+<td><code>201</code>; fabricante Volkswagen, ID 1</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td><code>POST /api/categorias-veiculo</code></td>
+<td><code>201</code>; categoria SUV, ID 1</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td><code>POST /api/clientes</code></td>
+<td><code>201</code>; Maria da Silva, ID 1</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td><code>POST /api/clientes</code></td>
+<td><code>201</code>; João sem Locação, ID 2</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td><code>POST /api/veiculos</code></td>
+<td><code>201</code>; T-Cross/BRA2E19, ID 1</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td><code>POST /api/alugueis</code></td>
+<td><code>201</code>; aluguel aberto, ID 1</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td><code>GET /api/fabricantes</code></td>
+<td><code>200</code>; array contendo fabricante ID 1</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td><code>GET /api/fabricantes/1</code></td>
+<td><code>200</code>; objeto Volkswagen</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td><code>GET /api/categorias-veiculo</code></td>
+<td><code>200</code>; array contendo categoria ID 1</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td><code>GET /api/categorias-veiculo/1</code></td>
+<td><code>200</code>; objeto SUV</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td><code>GET /api/clientes</code></td>
+<td><code>200</code>; array com clientes IDs 1 e 2</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td><code>GET /api/clientes/1</code></td>
+<td><code>200</code>; objeto Maria da Silva</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td><code>GET /api/veiculos</code></td>
+<td><code>200</code>; array com T-Cross e seus relacionamentos</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">14</td>
+<td><code>GET /api/veiculos/1</code></td>
+<td><code>200</code>; objeto T-Cross/BRA2E19</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td><code>GET /api/alugueis</code></td>
+<td><code>200</code>; array com aluguel ID 1</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td><code>GET /api/alugueis/1</code></td>
+<td><code>200</code>; aluguel de Maria e T-Cross</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">17</td>
+<td><code>PUT /api/fabricantes/1</code></td>
+<td><code>204</code>; nome alterado para Volkswagen Brasil</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">18</td>
+<td><code>PUT /api/categorias-veiculo/1</code></td>
+<td><code>204</code>; nome alterado para SUV Premium</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">19</td>
+<td><code>PUT /api/clientes/1</code></td>
+<td><code>204</code>; cliente alterado para Maria Souza</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">20</td>
+<td><code>PUT /api/veiculos/1</code></td>
+<td><code>204</code>; modelo alterado para T-Cross Highline</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">21</td>
+<td><code>PUT /api/alugueis/1</code></td>
+<td><code>204</code>; devolução registrada, 12.450 km e total 720,00</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">22</td>
+<td><code>GET /api/filtros/veiculos-por-fabricante?nome=Volkswagen</code></td>
+<td><code>200</code>; veículo ID 1</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">23</td>
+<td><code>GET /api/filtros/veiculos-por-categoria?nome=SUV&amp;quilometragemMaxima=50000</code></td>
+<td><code>200</code>; veículo ID 1</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">24</td>
+<td><code>GET /api/filtros/alugueis-por-cliente?termo=Maria</code></td>
+<td><code>200</code>; aluguel ID 1</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">25</td>
+<td><code>GET /api/filtros/alugueis-por-periodo?inicio=2026-10-01T00:00:00&amp;fim=2026-10-10T00:00:00</code></td>
+<td><code>200</code>; aluguel ID 1</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">26</td>
+<td><code>GET /api/filtros/clientes-sem-aluguel</code></td>
+<td><code>200</code>; cliente João, ID 2; comprova <code>LEFT JOIN</code></td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">27</td>
+<td><code>POST /api/clientes</code> com <code>{}</code></td>
+<td><code>400</code>; <code>ValidationProblemDetails</code> com campos obrigatórios</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">28</td>
+<td><code>GET /api/fabricantes/99999</code></td>
+<td><code>404</code>; <code>ProblemDetails</code> informando recurso inexistente</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">29</td>
+<td><code>POST /api/fabricantes</code> com nome duplicado</td>
+<td><code>409</code>; <code>ProblemDetails</code> informando conflito</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">30</td>
+<td><code>DELETE /api/alugueis/1</code></td>
+<td><code>204</code>; sem corpo</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">31</td>
+<td><code>DELETE /api/veiculos/1</code></td>
+<td><code>204</code>; sem corpo</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">32</td>
+<td><code>DELETE /api/clientes/2</code></td>
+<td><code>204</code>; sem corpo</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">33</td>
+<td><code>DELETE /api/clientes/1</code></td>
+<td><code>204</code>; sem corpo</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">34</td>
+<td><code>DELETE /api/categorias-veiculo/1</code></td>
+<td><code>204</code>; sem corpo</td>
+<td>Aprovado</td>
+</tr>
+<tr>
+<td align="right">35</td>
+<td><code>DELETE /api/fabricantes/1</code></td>
+<td><code>204</code>; sem corpo</td>
+<td>Aprovado</td>
+</tr>
+</tbody></table>
+<h2>5. Evidências do Swagger</h2>
+<h3>5.1 Visão geral e todos os endpoints</h3>
+<p><img src="evidencias/01-swagger-visao-geral.png" alt="Swagger com as 30 operações"></p>
+<h3>5.2 Método GET — retorno 200</h3>
+<p>A captura mostra chamada, Request URL, código 200 e aluguel devolvido no corpo.</p>
+<p><img src="evidencias/02-get-alugueis-200.png" alt="GET de aluguéis"></p>
+<h3>5.3 Método POST — retorno 201</h3>
+<p>A captura mostra o JSON enviado, comando curl gerado, URL, objeto criado e códigos documentados.</p>
+<p><img src="evidencias/03-post-fabricante-201.png" alt="POST de fabricante"></p>
+<h3>5.4 Método PUT — retorno 204</h3>
+<p><img src="evidencias/04-put-fabricante-204.png" alt="PUT de fabricante"></p>
+<h3>5.5 Método DELETE — retorno 204</h3>
+<p><img src="evidencias/05-delete-fabricante-204.png" alt="DELETE de fabricante"></p>
+<h3>5.6 Validação — retorno 400</h3>
+<p><img src="evidencias/06-validacao-400.png" alt="Entrada inválida"></p>
+<h3>5.7 Recurso inexistente — retorno 404</h3>
+<p><img src="evidencias/07-nao-encontrado-404.png" alt="Recurso não encontrado"></p>
+<h3>5.8 Duplicidade — retorno 409</h3>
+<p><img src="evidencias/08-conflito-409.png" alt="Conflito por duplicidade"></p>
+<h3>5.9 Filtro 1 — fabricante, INNER JOIN</h3>
+<p><img src="evidencias/09-filtro1-fabricante-200.png" alt="Filtro por fabricante"></p>
+<h3>5.10 Filtro 2 — categoria, INNER JOIN</h3>
+<p><img src="evidencias/10-filtro2-categoria-200.png" alt="Filtro por categoria"></p>
+<h3>5.11 Filtro 3 — cliente, INNER JOIN</h3>
+<p><img src="evidencias/11-filtro3-cliente-200.png" alt="Filtro por cliente"></p>
+<h3>5.12 Filtro 4 — período, INNER JOIN</h3>
+<p><img src="evidencias/12-filtro4-periodo-200.png" alt="Filtro por período"></p>
+<h3>5.13 Filtro 5 — clientes sem aluguel, LEFT JOIN</h3>
+<p>A resposta contém o cliente João, que não possui aluguel, comprovando o resultado da junção externa.</p>
+<p><img src="evidencias/13-filtro5-left-join-200.png" alt="Filtro com LEFT JOIN"></p>
+<h2>6. Defeito encontrado e corrigido</h2>
+<p>Na primeira execução, a validação de <code>ValorDiaria</code> dependia da conversão textual de <code>0.01</code>. Em cultura <code>pt-BR</code>, essa conversão produzia exceção e HTTP 500. A regra foi substituída por comparação decimal direta, independente de cultura. Após a correção, a bateria completa passou com 35/35 chamadas aprovadas.</p>
+<h2>7. Conclusão</h2>
+<ul>
+<li>Swagger integrado, acessível e com os códigos de resposta documentados;</li>
+<li>25 operações CRUD testadas;</li>
+<li>5 filtros testados, incluindo <code>INNER JOIN</code> e <code>LEFT JOIN</code>;</li>
+<li>validações e tratamento 400/404/409 comprovados;</li>
+<li>todas as chamadas esperadas aprovadas;</li>
+<li>nenhuma divergência restante identificada.</li>
+</ul>
+</body></html>

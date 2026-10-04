@@ -1,0 +1,409 @@
+﻿[
+    {
+        "ordem":  1,
+        "grupo":  "Fabricantes",
+        "descricao":  "Criar fabricante",
+        "metodo":  "POST",
+        "rota":  "/api/fabricantes",
+        "statusEsperado":  "201",
+        "statusObtido":  201,
+        "aprovado":  true,
+        "corpo":  "{\"id\":1,\"nome\":\"Volkswagen\",\"paisOrigem\":\"Alemanha\"}"
+    },
+    {
+        "ordem":  2,
+        "grupo":  "Categorias",
+        "descricao":  "Criar categoria",
+        "metodo":  "POST",
+        "rota":  "/api/categorias-veiculo",
+        "statusEsperado":  "201",
+        "statusObtido":  201,
+        "aprovado":  true,
+        "corpo":  "{\"id\":1,\"nome\":\"SUV\",\"descricao\":\"Veículo utilitário esportivo\"}"
+    },
+    {
+        "ordem":  3,
+        "grupo":  "Clientes",
+        "descricao":  "Criar cliente",
+        "metodo":  "POST",
+        "rota":  "/api/clientes",
+        "statusEsperado":  "201",
+        "statusObtido":  201,
+        "aprovado":  true,
+        "corpo":  "{\"id\":1,\"nome\":\"Maria da Silva\",\"cpf\":\"52998224725\",\"email\":\"maria@example.com\",\"telefone\":\"31999999999\",\"dataNascimento\":\"1995-05-10\",\"numeroCnh\":\"12345678901\",\"validadeCnh\":\"2030-12-31\",\"ativo\":true}"
+    },
+    {
+        "ordem":  4,
+        "grupo":  "PreparaÃ§Ã£o dos filtros",
+        "descricao":  "Criar cliente sem aluguel para comprovar o LEFT JOIN",
+        "metodo":  "POST",
+        "rota":  "/api/clientes",
+        "statusEsperado":  "201",
+        "statusObtido":  201,
+        "aprovado":  true,
+        "corpo":  "{\"id\":2,\"nome\":\"João sem Locação\",\"cpf\":\"11144477735\",\"email\":\"joao@example.com\",\"telefone\":\"31988888888\",\"dataNascimento\":\"1990-03-15\",\"numeroCnh\":\"10987654321\",\"validadeCnh\":\"2031-06-30\",\"ativo\":true}"
+    },
+    {
+        "ordem":  5,
+        "grupo":  "VeÃ­culos",
+        "descricao":  "Criar veÃ­culo",
+        "metodo":  "POST",
+        "rota":  "/api/veiculos",
+        "statusEsperado":  "201",
+        "statusObtido":  201,
+        "aprovado":  true,
+        "corpo":  "{\"id\":1,\"fabricanteId\":1,\"fabricante\":\"Volkswagen\",\"categoriaVeiculoId\":1,\"categoria\":\"SUV\",\"modelo\":\"T-Cross\",\"placa\":\"BRA2E19\",\"chassi\":\"9BWZZZ377VT004251\",\"anoFabricacao\":2024,\"quilometragem\":12000,\"ativo\":true}"
+    },
+    {
+        "ordem":  6,
+        "grupo":  "AluguÃ©is",
+        "descricao":  "Criar aluguel",
+        "metodo":  "POST",
+        "rota":  "/api/alugueis",
+        "statusEsperado":  "201",
+        "statusObtido":  201,
+        "aprovado":  true,
+        "corpo":  "{\"id\":1,\"clienteId\":1,\"cliente\":\"Maria da Silva\",\"veiculoId\":1,\"veiculo\":\"Volkswagen T-Cross\",\"placa\":\"BRA2E19\",\"dataRetirada\":\"2026-10-01T09:00:00\",\"dataPrevistaDevolucao\":\"2026-10-05T09:00:00\",\"dataDevolucao\":null,\"quilometragemInicial\":12000,\"quilometragemFinal\":null,\"valorDiaria\":180,\"valorTotal\":null,\"situacao\":\"Em aberto\"}"
+    },
+    {
+        "ordem":  7,
+        "grupo":  "Fabricantes",
+        "descricao":  "Listar fabricantes",
+        "metodo":  "GET",
+        "rota":  "/api/fabricantes",
+        "statusEsperado":  "200",
+        "statusObtido":  200,
+        "aprovado":  true,
+        "corpo":  "[{\"id\":1,\"nome\":\"Volkswagen\",\"paisOrigem\":\"Alemanha\"}]"
+    },
+    {
+        "ordem":  8,
+        "grupo":  "Fabricantes",
+        "descricao":  "Consultar fabricante por ID",
+        "metodo":  "GET",
+        "rota":  "/api/fabricantes/1",
+        "statusEsperado":  "200",
+        "statusObtido":  200,
+        "aprovado":  true,
+        "corpo":  "{\"id\":1,\"nome\":\"Volkswagen\",\"paisOrigem\":\"Alemanha\"}"
+    },
+    {
+        "ordem":  9,
+        "grupo":  "Categorias",
+        "descricao":  "Listar categorias",
+        "metodo":  "GET",
+        "rota":  "/api/categorias-veiculo",
+        "statusEsperado":  "200",
+        "statusObtido":  200,
+        "aprovado":  true,
+        "corpo":  "[{\"id\":1,\"nome\":\"SUV\",\"descricao\":\"Veículo utilitário esportivo\"}]"
+    },
+    {
+        "ordem":  10,
+        "grupo":  "Categorias",
+        "descricao":  "Consultar categoria por ID",
+        "metodo":  "GET",
+        "rota":  "/api/categorias-veiculo/1",
+        "statusEsperado":  "200",
+        "statusObtido":  200,
+        "aprovado":  true,
+        "corpo":  "{\"id\":1,\"nome\":\"SUV\",\"descricao\":\"Veículo utilitário esportivo\"}"
+    },
+    {
+        "ordem":  11,
+        "grupo":  "Clientes",
+        "descricao":  "Listar clientes",
+        "metodo":  "GET",
+        "rota":  "/api/clientes",
+        "statusEsperado":  "200",
+        "statusObtido":  200,
+        "aprovado":  true,
+        "corpo":  "[{\"id\":2,\"nome\":\"João sem Locação\",\"cpf\":\"11144477735\",\"email\":\"joao@example.com\",\"telefone\":\"31988888888\",\"dataNascimento\":\"1990-03-15\",\"numeroCnh\":\"10987654321\",\"validadeCnh\":\"2031-06-30\",\"ativo\":true},{\"id\":1,\"nome\":\"Maria da Silva\",\"cpf\":\"52998224725\",\"email\":\"maria@example.com\",\"telefone\":\"31999999999\",\"dataNascimento\":\"1995-05-10\",\"numeroCnh\":\"12345678901\",\"validadeCnh\":\"2030-12-31\",\"ativo\":true}]"
+    },
+    {
+        "ordem":  12,
+        "grupo":  "Clientes",
+        "descricao":  "Consultar cliente por ID",
+        "metodo":  "GET",
+        "rota":  "/api/clientes/1",
+        "statusEsperado":  "200",
+        "statusObtido":  200,
+        "aprovado":  true,
+        "corpo":  "{\"id\":1,\"nome\":\"Maria da Silva\",\"cpf\":\"52998224725\",\"email\":\"maria@example.com\",\"telefone\":\"31999999999\",\"dataNascimento\":\"1995-05-10\",\"numeroCnh\":\"12345678901\",\"validadeCnh\":\"2030-12-31\",\"ativo\":true}"
+    },
+    {
+        "ordem":  13,
+        "grupo":  "VeÃ­culos",
+        "descricao":  "Listar veÃ­culos",
+        "metodo":  "GET",
+        "rota":  "/api/veiculos",
+        "statusEsperado":  "200",
+        "statusObtido":  200,
+        "aprovado":  true,
+        "corpo":  "[{\"id\":1,\"fabricanteId\":1,\"fabricante\":\"Volkswagen\",\"categoriaVeiculoId\":1,\"categoria\":\"SUV\",\"modelo\":\"T-Cross\",\"placa\":\"BRA2E19\",\"chassi\":\"9BWZZZ377VT004251\",\"anoFabricacao\":2024,\"quilometragem\":12000,\"ativo\":true}]"
+    },
+    {
+        "ordem":  14,
+        "grupo":  "VeÃ­culos",
+        "descricao":  "Consultar veÃ­culo por ID",
+        "metodo":  "GET",
+        "rota":  "/api/veiculos/1",
+        "statusEsperado":  "200",
+        "statusObtido":  200,
+        "aprovado":  true,
+        "corpo":  "{\"id\":1,\"fabricanteId\":1,\"fabricante\":\"Volkswagen\",\"categoriaVeiculoId\":1,\"categoria\":\"SUV\",\"modelo\":\"T-Cross\",\"placa\":\"BRA2E19\",\"chassi\":\"9BWZZZ377VT004251\",\"anoFabricacao\":2024,\"quilometragem\":12000,\"ativo\":true}"
+    },
+    {
+        "ordem":  15,
+        "grupo":  "AluguÃ©is",
+        "descricao":  "Listar aluguÃ©is",
+        "metodo":  "GET",
+        "rota":  "/api/alugueis",
+        "statusEsperado":  "200",
+        "statusObtido":  200,
+        "aprovado":  true,
+        "corpo":  "[{\"id\":1,\"clienteId\":1,\"cliente\":\"Maria da Silva\",\"veiculoId\":1,\"veiculo\":\"Volkswagen T-Cross\",\"placa\":\"BRA2E19\",\"dataRetirada\":\"2026-10-01T09:00:00\",\"dataPrevistaDevolucao\":\"2026-10-05T09:00:00\",\"dataDevolucao\":null,\"quilometragemInicial\":12000,\"quilometragemFinal\":null,\"valorDiaria\":180,\"valorTotal\":null,\"situacao\":\"Em aberto\"}]"
+    },
+    {
+        "ordem":  16,
+        "grupo":  "AluguÃ©is",
+        "descricao":  "Consultar aluguel por ID",
+        "metodo":  "GET",
+        "rota":  "/api/alugueis/1",
+        "statusEsperado":  "200",
+        "statusObtido":  200,
+        "aprovado":  true,
+        "corpo":  "{\"id\":1,\"clienteId\":1,\"cliente\":\"Maria da Silva\",\"veiculoId\":1,\"veiculo\":\"Volkswagen T-Cross\",\"placa\":\"BRA2E19\",\"dataRetirada\":\"2026-10-01T09:00:00\",\"dataPrevistaDevolucao\":\"2026-10-05T09:00:00\",\"dataDevolucao\":null,\"quilometragemInicial\":12000,\"quilometragemFinal\":null,\"valorDiaria\":180,\"valorTotal\":null,\"situacao\":\"Em aberto\"}"
+    },
+    {
+        "ordem":  17,
+        "grupo":  "Fabricantes",
+        "descricao":  "Atualizar fabricante",
+        "metodo":  "PUT",
+        "rota":  "/api/fabricantes/1",
+        "statusEsperado":  "204",
+        "statusObtido":  204,
+        "aprovado":  true,
+        "corpo":  {
+
+                  }
+    },
+    {
+        "ordem":  18,
+        "grupo":  "Categorias",
+        "descricao":  "Atualizar categoria",
+        "metodo":  "PUT",
+        "rota":  "/api/categorias-veiculo/1",
+        "statusEsperado":  "204",
+        "statusObtido":  204,
+        "aprovado":  true,
+        "corpo":  {
+
+                  }
+    },
+    {
+        "ordem":  19,
+        "grupo":  "Clientes",
+        "descricao":  "Atualizar cliente",
+        "metodo":  "PUT",
+        "rota":  "/api/clientes/1",
+        "statusEsperado":  "204",
+        "statusObtido":  204,
+        "aprovado":  true,
+        "corpo":  {
+
+                  }
+    },
+    {
+        "ordem":  20,
+        "grupo":  "VeÃ­culos",
+        "descricao":  "Atualizar veÃ­culo",
+        "metodo":  "PUT",
+        "rota":  "/api/veiculos/1",
+        "statusEsperado":  "204",
+        "statusObtido":  204,
+        "aprovado":  true,
+        "corpo":  {
+
+                  }
+    },
+    {
+        "ordem":  21,
+        "grupo":  "AluguÃ©is",
+        "descricao":  "Registrar devoluÃ§Ã£o/atualizar aluguel",
+        "metodo":  "PUT",
+        "rota":  "/api/alugueis/1",
+        "statusEsperado":  "204",
+        "statusObtido":  204,
+        "aprovado":  true,
+        "corpo":  {
+
+                  }
+    },
+    {
+        "ordem":  22,
+        "grupo":  "Filtros",
+        "descricao":  "Filtro 1 - INNER JOIN",
+        "metodo":  "GET",
+        "rota":  "/api/filtros/veiculos-por-fabricante?nome=Volkswagen",
+        "statusEsperado":  "200",
+        "statusObtido":  200,
+        "aprovado":  true,
+        "corpo":  "[{\"id\":1,\"fabricante\":\"Volkswagen Brasil\",\"categoria\":\"SUV Premium\",\"modelo\":\"T-Cross Highline\",\"placa\":\"BRA2E19\",\"anoFabricacao\":2024,\"quilometragem\":12450,\"ativo\":true}]"
+    },
+    {
+        "ordem":  23,
+        "grupo":  "Filtros",
+        "descricao":  "Filtro 2 - INNER JOIN",
+        "metodo":  "GET",
+        "rota":  "/api/filtros/veiculos-por-categoria?nome=SUV\u0026quilometragemMaxima=50000",
+        "statusEsperado":  "200",
+        "statusObtido":  200,
+        "aprovado":  true,
+        "corpo":  "[{\"id\":1,\"fabricante\":\"Volkswagen Brasil\",\"categoria\":\"SUV Premium\",\"modelo\":\"T-Cross Highline\",\"placa\":\"BRA2E19\",\"anoFabricacao\":2024,\"quilometragem\":12450,\"ativo\":true}]"
+    },
+    {
+        "ordem":  24,
+        "grupo":  "Filtros",
+        "descricao":  "Filtro 3 - INNER JOIN",
+        "metodo":  "GET",
+        "rota":  "/api/filtros/alugueis-por-cliente?termo=Maria",
+        "statusEsperado":  "200",
+        "statusObtido":  200,
+        "aprovado":  true,
+        "corpo":  "[{\"id\":1,\"cliente\":\"Maria Souza\",\"cpf\":\"52998224725\",\"veiculo\":\"T-Cross Highline\",\"placa\":\"BRA2E19\",\"dataRetirada\":\"2026-10-01T09:00:00\",\"dataPrevistaDevolucao\":\"2026-10-05T09:00:00\",\"dataDevolucao\":\"2026-10-05T08:30:00\",\"valorDiaria\":180,\"valorTotal\":720,\"situacao\":\"Devolvido\"}]"
+    },
+    {
+        "ordem":  25,
+        "grupo":  "Filtros",
+        "descricao":  "Filtro 4 - INNER JOIN",
+        "metodo":  "GET",
+        "rota":  "/api/filtros/alugueis-por-periodo?inicio=2026-10-01T00%3A00%3A00\u0026fim=2026-10-10T00%3A00%3A00",
+        "statusEsperado":  "200",
+        "statusObtido":  200,
+        "aprovado":  true,
+        "corpo":  "[{\"id\":1,\"cliente\":\"Maria Souza\",\"cpf\":\"52998224725\",\"veiculo\":\"T-Cross Highline\",\"placa\":\"BRA2E19\",\"dataRetirada\":\"2026-10-01T09:00:00\",\"dataPrevistaDevolucao\":\"2026-10-05T09:00:00\",\"dataDevolucao\":\"2026-10-05T08:30:00\",\"valorDiaria\":180,\"valorTotal\":720,\"situacao\":\"Devolvido\"}]"
+    },
+    {
+        "ordem":  26,
+        "grupo":  "Filtros",
+        "descricao":  "Filtro 5 - LEFT JOIN",
+        "metodo":  "GET",
+        "rota":  "/api/filtros/clientes-sem-aluguel",
+        "statusEsperado":  "200",
+        "statusObtido":  200,
+        "aprovado":  true,
+        "corpo":  "[{\"id\":2,\"nome\":\"João sem Locação\",\"cpf\":\"11144477735\",\"email\":\"joao@example.com\",\"ativo\":true}]"
+    },
+    {
+        "ordem":  27,
+        "grupo":  "ValidaÃ§Ãµes",
+        "descricao":  "Entrada invÃ¡lida deve retornar 400",
+        "metodo":  "POST",
+        "rota":  "/api/clientes",
+        "statusEsperado":  "400",
+        "statusObtido":  400,
+        "aprovado":  true,
+        "corpo":  "{\"title\":\"Dados de entrada inválidos\",\"status\":400,\"detail\":\"Corrija os campos indicados e tente novamente.\",\"errors\":{\"Cpf\":[\"The Cpf field is required.\",\"CPF inválido.\"],\"Nome\":[\"The Nome field is required.\",\"The field Nome must be a string with a minimum length of 3 and a maximum length of 150.\"],\"Email\":[\"The Email field is required.\",\"The Email field is not a valid e-mail address.\"],\"NumeroCnh\":[\"The NumeroCnh field is required.\"]}}"
+    },
+    {
+        "ordem":  28,
+        "grupo":  "ValidaÃ§Ãµes",
+        "descricao":  "Recurso inexistente deve retornar 404",
+        "metodo":  "GET",
+        "rota":  "/api/fabricantes/99999",
+        "statusEsperado":  "404",
+        "statusObtido":  404,
+        "aprovado":  true,
+        "corpo":  "{\"type\":\"https://tools.ietf.org/html/rfc9110#section-15.5.5\",\"title\":\"Recurso não encontrado\",\"status\":404,\"detail\":\"Fabricante com ID 99999 não foi encontrado.\",\"instance\":\"/api/fabricantes/99999\"}"
+    },
+    {
+        "ordem":  29,
+        "grupo":  "ValidaÃ§Ãµes",
+        "descricao":  "Duplicidade deve retornar 409",
+        "metodo":  "POST",
+        "rota":  "/api/fabricantes",
+        "statusEsperado":  "409",
+        "statusObtido":  409,
+        "aprovado":  true,
+        "corpo":  "{\"type\":\"https://tools.ietf.org/html/rfc9110#section-15.5.10\",\"title\":\"Conflito com os dados existentes\",\"status\":409,\"detail\":\"Já existe um fabricante com esse nome.\",\"instance\":\"/api/fabricantes\"}"
+    },
+    {
+        "ordem":  30,
+        "grupo":  "AluguÃ©is",
+        "descricao":  "Excluir aluguel",
+        "metodo":  "DELETE",
+        "rota":  "/api/alugueis/1",
+        "statusEsperado":  "204",
+        "statusObtido":  204,
+        "aprovado":  true,
+        "corpo":  {
+
+                  }
+    },
+    {
+        "ordem":  31,
+        "grupo":  "VeÃ­culos",
+        "descricao":  "Excluir veÃ­culo",
+        "metodo":  "DELETE",
+        "rota":  "/api/veiculos/1",
+        "statusEsperado":  "204",
+        "statusObtido":  204,
+        "aprovado":  true,
+        "corpo":  {
+
+                  }
+    },
+    {
+        "ordem":  32,
+        "grupo":  "Clientes",
+        "descricao":  "Excluir cliente auxiliar",
+        "metodo":  "DELETE",
+        "rota":  "/api/clientes/2",
+        "statusEsperado":  "204",
+        "statusObtido":  204,
+        "aprovado":  true,
+        "corpo":  {
+
+                  }
+    },
+    {
+        "ordem":  33,
+        "grupo":  "Clientes",
+        "descricao":  "Excluir cliente",
+        "metodo":  "DELETE",
+        "rota":  "/api/clientes/1",
+        "statusEsperado":  "204",
+        "statusObtido":  204,
+        "aprovado":  true,
+        "corpo":  {
+
+                  }
+    },
+    {
+        "ordem":  34,
+        "grupo":  "Categorias",
+        "descricao":  "Excluir categoria",
+        "metodo":  "DELETE",
+        "rota":  "/api/categorias-veiculo/1",
+        "statusEsperado":  "204",
+        "statusObtido":  204,
+        "aprovado":  true,
+        "corpo":  {
+
+                  }
+    },
+    {
+        "ordem":  35,
+        "grupo":  "Fabricantes",
+        "descricao":  "Excluir fabricante",
+        "metodo":  "DELETE",
+        "rota":  "/api/fabricantes/1",
+        "statusEsperado":  "204",
+        "statusObtido":  204,
+        "aprovado":  true,
+        "corpo":  {
+
+                  }
+    }
+]

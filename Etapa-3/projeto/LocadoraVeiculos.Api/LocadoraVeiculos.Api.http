@@ -1,0 +1,112 @@
+@host = http://localhost:5076
+
+### Swagger
+GET {{host}}/swagger/v1/swagger.json
+
+### Criar fabricante (execute primeiro)
+POST {{host}}/api/fabricantes
+Content-Type: application/json
+
+{
+  "nome": "Volkswagen",
+  "paisOrigem": "Alemanha"
+}
+
+### Criar categoria (execute em segundo)
+POST {{host}}/api/categorias-veiculo
+Content-Type: application/json
+
+{
+  "nome": "SUV",
+  "descricao": "Veículo utilitário esportivo"
+}
+
+### Criar cliente — CPF válido
+POST {{host}}/api/clientes
+Content-Type: application/json
+
+{
+  "nome": "Maria da Silva",
+  "cpf": "52998224725",
+  "email": "maria@example.com",
+  "telefone": "31999999999",
+  "dataNascimento": "1995-05-10",
+  "numeroCnh": "12345678901",
+  "validadeCnh": "2030-12-31",
+  "ativo": true
+}
+
+### Criar veículo — pressupõe fabricante 1 e categoria 1
+POST {{host}}/api/veiculos
+Content-Type: application/json
+
+{
+  "fabricanteId": 1,
+  "categoriaVeiculoId": 1,
+  "modelo": "T-Cross",
+  "placa": "BRA2E19",
+  "chassi": "9BWZZZ377VT004251",
+  "anoFabricacao": 2024,
+  "quilometragem": 12000,
+  "ativo": true
+}
+
+### Criar aluguel — pressupõe cliente 1 e veículo 1
+POST {{host}}/api/alugueis
+Content-Type: application/json
+
+{
+  "clienteId": 1,
+  "veiculoId": 1,
+  "dataRetirada": "2026-10-01T09:00:00",
+  "dataPrevistaDevolucao": "2026-10-05T09:00:00",
+  "quilometragemInicial": 12000,
+  "valorDiaria": 180.00
+}
+
+### Listagens CRUD
+GET {{host}}/api/fabricantes
+###
+GET {{host}}/api/categorias-veiculo
+###
+GET {{host}}/api/clientes
+###
+GET {{host}}/api/veiculos
+###
+GET {{host}}/api/alugueis
+
+### Atualizar/devolver aluguel 1
+PUT {{host}}/api/alugueis/1
+Content-Type: application/json
+
+{
+  "clienteId": 1,
+  "veiculoId": 1,
+  "dataRetirada": "2026-10-01T09:00:00",
+  "dataPrevistaDevolucao": "2026-10-05T09:00:00",
+  "dataDevolucao": "2026-10-05T08:30:00",
+  "quilometragemInicial": 12000,
+  "quilometragemFinal": 12450,
+  "valorDiaria": 180.00,
+  "valorTotal": 720.00
+}
+
+### Filtro 1 — INNER JOIN Veículos/Fabricantes/Categorias
+GET {{host}}/api/filtros/veiculos-por-fabricante?nome=Volkswagen
+
+### Filtro 2 — INNER JOIN Veículos/Categorias/Fabricantes
+GET {{host}}/api/filtros/veiculos-por-categoria?nome=SUV&quilometragemMaxima=50000
+
+### Filtro 3 — INNER JOIN Aluguéis/Clientes/Veículos
+GET {{host}}/api/filtros/alugueis-por-cliente?termo=Maria
+
+### Filtro 4 — INNER JOIN Aluguéis/Clientes/Veículos
+GET {{host}}/api/filtros/alugueis-por-periodo?inicio=2026-10-01T00:00:00&fim=2026-10-10T00:00:00
+
+### Filtro 5 — LEFT JOIN Clientes/Aluguéis
+GET {{host}}/api/filtros/clientes-sem-aluguel
+
+### Exemplos das demais operações CRUD
+GET {{host}}/api/veiculos/1
+###
+DELETE {{host}}/api/alugueis/1
